@@ -1,0 +1,55 @@
+import { Routes, Route } from "react-router-dom";
+import BooleanPage from "./pages/boolean_test";
+import { useEffect } from "react";
+import type { CSSProperties } from "react";
+import LoginPage from "./pages/login";
+import Hello from "./pages/hello";
+import SignupPage from "./pages/signup";
+import Choice from "./pages/choice";
+import GuestPage from "./pages/guest";
+
+function App() {
+  useEffect(() => {
+    const setRealViewport = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty("--vh", `${vh}px`);
+    };
+
+    setRealViewport();
+    window.addEventListener("resize", setRealViewport);
+    return () => window.removeEventListener("resize", setRealViewport);
+  }, []);
+
+  const containerStyle: CSSProperties = {
+    position: "relative",
+    //height: "100vh",
+    height: "calc(var(--vh, 1vh) * 100)",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    color: "white",
+    fontFamily: "sans-serif",
+    overflow: "hidden",
+  };
+  return (
+    <div style={containerStyle}>
+
+      <Routes>
+        <Route path="/" element={<BooleanPage />} />
+        <Route path="/about" element={<>Yahouu 2</>} />
+        <Route path="/login" element={<LoginPage/>} />
+        <Route path="/signup" element={<SignupPage/>} />
+        <Route path="/choice" element={<Choice/>} />
+        <Route path="/guest" element={<GuestPage/>} />
+        <Route path="/hello" element={<Hello/>} />
+        <Route path="*" element={<>Yahouu 3</>} />
+      </Routes>
+    </div>
+  );
+}
+
+export default App;
+
+//      <Test />

@@ -1,0 +1,13 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to right, #ec4899, #3b82f6); /* same as your page */
+  overscroll-behavior: none; /* prevent scroll chaining */
+  height: 100%;
+}
+@font-face {
+  font-family: "funny";
+  src: url("/Grandstander-clean.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}

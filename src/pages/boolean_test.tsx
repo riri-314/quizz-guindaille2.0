@@ -5,25 +5,12 @@ import guindaille from "/guindaille.png";
 import arrowImage from "/arrow2.png";
 import type { CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-
 
 export default function BooleanPage() {
   const navigate = useNavigate();
   const [buttonState, setButtonState] = useState<"idle" | "loading" | "done">(
     "idle"
   );
-
-  useEffect(() => {
-  const setRealViewport = () => {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty("--vh", `${vh}px`);
-  };
-
-  setRealViewport();
-  window.addEventListener("resize", setRealViewport);
-  return () => window.removeEventListener("resize", setRealViewport);
-}, []);
 
   const handleClick = () => {
     if (buttonState !== "idle") return;
@@ -59,8 +46,6 @@ export default function BooleanPage() {
     ),
     done: "Validé 🎉",
   };
-
-
 
   const contentStyle: CSSProperties = {
     position: "relative",
@@ -106,13 +91,13 @@ export default function BooleanPage() {
   const buttonStyle: CSSProperties = {
     fontFamily: "funny",
     marginTop: "2rem",
-    fontSize: "1rem",
+    fontSize: "1.4rem",
     width: "16rem",
     height: "4rem",
     backgroundColor: buttonState === "done" ? "green" : "#3b82f6",
     color: "white",
     fontWeight: "bold",
-            padding: "0.75rem",
+    padding: "0.75rem",
     //padding: "0.5rem 2rem",
     border: "none",
     borderRadius: "999px",
@@ -168,7 +153,7 @@ export default function BooleanPage() {
       <img
         src={arrowImage}
         alt="Retour"
-        onClick={() => navigate("/hello")}
+        onClick={() => navigate("/picto")}
         style={{
           position: "absolute",
           top: "1rem",
@@ -213,15 +198,15 @@ export default function BooleanPage() {
         {buttonState === "done" && (
           <div
             style={{
+              fontFamily: "funny",
               marginTop: "1rem",
-              fontSize: "1.4rem",
+              fontSize: "1rem",
               fontWeight: "bold",
               color: "#fff",
-              textShadow: "2px 2px 0px black",
               animation: "fadeInUp 0.8s ease-out forwards",
               cursor: "pointer",
             }}
-            onClick={() => navigate("/next")} // ← Change this if needed
+            onClick={() => navigate("/test")} // ← Change this if needed
           >
             Suivant →
           </div>

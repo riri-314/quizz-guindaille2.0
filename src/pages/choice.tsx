@@ -8,11 +8,11 @@ export default function Choice() {
   const navigate = useNavigate();
 
   const QCM = () => {
-    navigate("/");
+    navigate("/picto");
   };
 
   const SimpleText = () => {
-    navigate("/");
+    navigate("/picto");
   };
 
   const logoLeftStyle: CSSProperties = {

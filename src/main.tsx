@@ -11,5 +11,3 @@ createRoot(document.getElementById("root")!).render(
     </BrowserRouter>
   </StrictMode>
 );
-
-// login page and logic behind it

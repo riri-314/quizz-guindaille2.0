@@ -94,14 +94,17 @@ export default function BooleanPage() {
     fontSize: "1.4rem",
     width: "16rem",
     height: "4rem",
-    backgroundColor: buttonState === "done" ? "green" : "#3b82f6",
+    background:
+      buttonState === "done"
+        ? "linear-gradient(135deg,rgb(31, 160, 117), #34d399)"
+        : "linear-gradient(135deg, #3b82f6, #60a5fa)",
     color: "white",
     fontWeight: "bold",
     padding: "0.75rem",
     //padding: "0.5rem 2rem",
     border: "none",
     borderRadius: "999px",
-    boxShadow: "0 2px 6px rgba(0, 0, 0, 0.3)",
+    boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
     cursor: buttonState === "done" ? "default" : "pointer",
     transition: "all 0.3s ease",
   };

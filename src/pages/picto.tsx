@@ -1,4 +1,3 @@
-import React from "react";
 import { useSnapCarousel } from "@rsagiev/react-snap-carousel-19";
 import testImage from "/logo.webp";
 import arrowImage from "/arrow2.png";
@@ -62,10 +61,10 @@ export default function Picto() {
     textShadow: "3px 3px 0px black",
     textAlign: "center",
   };
-    const textSubTitleStyle: CSSProperties = {
+  const textSubTitleStyle: CSSProperties = {
     fontFamily: "funny",
     // position: "absolute", // ❌ remove this line
-    marginBottom: "2rem", // ✅ space below the title
+    marginBottom: "0.5rem", // ✅ space below the title
     color: "white",
     fontWeight: "bold",
     fontSize: "1rem",
@@ -100,14 +99,14 @@ export default function Picto() {
   const textDescriptionStyle: CSSProperties = {
     fontFamily: "funny",
     // position: "absolute", // ❌ remove this line
-    marginBottom: "1rem", // ✅ space below the title
+    marginBottom: "0.5rem", // ✅ space below the title
     color: "white",
     fontWeight: "bold",
     lineHeight: 1.5,
-    padding: "1rem",
+    //padding: "1rem",
+    paddingTop: "0.5rem",
     textAlign: "center",
   };
-
 
   return (
     <>
@@ -134,10 +133,11 @@ export default function Picto() {
           ref={scrollRef}
           style={{
             display: "flex",
-            overflowX: "scroll", // keep scrolling functionality
-            scrollbarWidth: "none", // Firefox
-            msOverflowStyle: "none", // IE 10+
+            overflowX: "scroll",
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
             scrollSnapType: "x mandatory",
+            scrollPadding: "0 50%", // 👈 add this
             padding: 0,
             margin: 0,
             listStyle: "none",
@@ -148,20 +148,21 @@ export default function Picto() {
               key={item.id}
               style={{
                 flex: "0 0 auto",
-                width: 300,
-                marginRight: 15,
-                scrollSnapAlign: "start",
+                width: 250,
+                marginRight: 1,
+                scrollSnapAlign: "center", // 👈 change this from 'start'
                 borderRadius: 8,
                 padding: 1,
+                paddingBottom: 0,
+                paddingTop: 0,
                 boxSizing: "border-box",
                 textAlign: "center",
               }}
             >
-
               <img
                 src={item.imageUrl}
                 alt={`Image ${index + 1}`}
-                style={{ width: "100%", height: "auto", marginBottom: 8 }}
+                style={{ width: "70%", height: "auto", marginBottom: 0 }}
                 onClick={() => navigate(`/test`)}
               />
               <div style={textDescriptionStyle}>{item.description}</div>
@@ -173,7 +174,7 @@ export default function Picto() {
         <div
           style={{ display: "flex", justifyContent: "center", marginTop: 8 }}
         >
-          {pages.map((_: any, i: React.Key | null | undefined) => (
+          {pages.map((_: any, i: any) => (
             <button
               key={i}
               onClick={() => goTo(i)}

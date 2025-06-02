@@ -11,3 +11,11 @@ html, body {
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: "noir";
+  src: url("/noir.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+

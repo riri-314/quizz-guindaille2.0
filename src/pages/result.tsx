@@ -2,12 +2,13 @@ import { useNavigate } from "react-router-dom";
 import type { CSSProperties } from "react";
 import universSante from "/univers-sante.png";
 import guindaille from "/guindaille.png";
+import arrowImage from "/arrow2.png";
 
-export default function Hello() {
+export default function Score() {
   const navigate = useNavigate();
 
-  const handleGuest = () => {
-    navigate("/guest");
+  const handleNext = () => {
+    navigate("/next"); // remplace "/next" par la bonne route
   };
 
   const logoLeftStyle: CSSProperties = {
@@ -25,18 +26,19 @@ export default function Hello() {
   const logoImageStyleL: CSSProperties = {
     height: "50px",
     width: "auto",
-    objectFit: "contain" as const,
+    objectFit: "contain",
   };
 
   const logoImageStyleR: CSSProperties = {
     height: "40px",
     width: "auto",
-    objectFit: "contain" as const,
+    objectFit: "contain",
   };
 
-  const textTitleStyle: CSSProperties = {
+  const titleStyle: CSSProperties = {
     fontFamily: "funny",
-    marginBottom: "2rem",
+    // position: "absolute", // ❌ remove this line
+    marginBottom: "2rem", // ✅ space below the title
     color: "white",
     fontWeight: "bold",
     fontSize: "2.5rem",
@@ -44,6 +46,34 @@ export default function Hello() {
     padding: "1rem",
     textShadow: "3px 3px 0px black",
     textAlign: "center",
+  };
+
+  const scoreStyle: CSSProperties = {
+    fontFamily: "funny",
+    color: "white",
+    fontSize: "5rem",
+    fontWeight: "bold",
+    textShadow: "3px 3px 0px black",
+    marginBottom: "2rem",
+  };
+
+  const buttonStyle: CSSProperties = {
+    fontFamily: "funny",
+    marginTop: "2rem",
+    fontSize: "1.4rem",
+    width: "16rem",
+    height: "4rem",
+    background: "linear-gradient(135deg,rgb(31, 160, 117), #34d399)",
+    color: "white",
+    fontWeight: "bold",
+    padding: "0.75rem",
+    //padding: "0.5rem 2rem",
+    border: "none",
+    borderRadius: "999px",
+    boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
+    cursor: "pointer",
+    transition: "all 0.3s ease",
+    zIndex: 10,
   };
 
   const backgroundWrapperStyle: CSSProperties = {
@@ -92,8 +122,6 @@ export default function Hello() {
           ))}
         </div>
       </div>
-
-      {/* Foreground content */}
       <div
         style={{
           display: "flex",
@@ -101,36 +129,40 @@ export default function Hello() {
           alignItems: "center",
           justifyContent: "center",
           height: "100vh",
+          textAlign: "center",
+          position: "relative",
           color: "white",
           padding: "1rem",
-          textAlign: "center",
         }}
       >
-        <div style={textTitleStyle}>Bienvenue sur notre app !</div>
+        <img
+          src={arrowImage}
+          alt="Retour"
+          onClick={() => navigate("/hello")}
+          style={{
+            position: "absolute",
+            top: "1rem",
+            left: "1rem",
+            height: "2.5rem",
+            width: "auto",
+            cursor: "pointer",
+            zIndex: 10,
+            transform: "scaleX(-1)",
+          }}
+        />
+
+        <div style={titleStyle}>Ton score est de</div>
+        <div style={scoreStyle}>
+          12 <span style={{ fontSize: "3rem" }}>/</span> 15
+        </div>
 
         <button
-          onClick={handleGuest}
-          style={{
-            zIndex: 2,
-            fontFamily: "funny",
-            marginTop: "0.75rem",
-            background: "linear-gradient(135deg,rgb(31, 160, 117), #34d399)",
-            color: "white",
-            padding: "0.85rem 1.75rem",
-            borderRadius: "999px",
-            border: "none",
-            width: "100%",
-            maxWidth: "320px",
-            fontWeight: "bold",
-            fontSize: "1.4rem",
-            boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
-            cursor: "pointer",
-            transition: "transform 0.2s",
-          }}
+          style={buttonStyle}
+          onClick={handleNext}
           onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
           onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
         >
-          Commencer
+          Suivant
         </button>
 
         <div style={logoLeftStyle}>

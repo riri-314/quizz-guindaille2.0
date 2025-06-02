@@ -23,7 +23,7 @@ export default function GuestPage() {
       setButtonState("done");
       console.log("Logged in with", nickename);
       navigate("/choice");
-    }, 2000);
+    }, 200);
     setError("");
     // Fake login logic
   };

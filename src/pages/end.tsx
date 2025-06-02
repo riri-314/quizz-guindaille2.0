@@ -4,15 +4,15 @@ import universSante from "/univers-sante.png";
 import guindaille from "/guindaille.png";
 import arrowImage from "/arrow2.png";
 
-export default function Choice() {
+export default function End() {
   const navigate = useNavigate();
 
-  const QCM = () => {
-    navigate("/qcm");
+  const insta = () => {
+    window.open("https://www.instagram.com/guindaille2.0/", "_blank");
   };
 
   const SimpleText = () => {
-    navigate("/picto");
+    navigate("/choice");
   };
 
   const logoLeftStyle: CSSProperties = {
@@ -37,19 +37,6 @@ export default function Choice() {
     height: "40px",
     width: "auto",
     objectFit: "contain" as const,
-  };
-
-  const textTitleStyle: CSSProperties = {
-    fontFamily: "funny",
-    // position: "absolute", // ❌ remove this line
-    marginBottom: "2rem", // ✅ space below the title
-    color: "white",
-    fontWeight: "bold",
-    fontSize: "2.5rem",
-    lineHeight: 1.5,
-    padding: "1rem",
-    textShadow: "3px 3px 0px black",
-    textAlign: "center",
   };
 
   return (
@@ -81,10 +68,9 @@ export default function Choice() {
         }}
       />
 
-      <div style={textTitleStyle}>Fait un choix !</div>
 
       <button
-        onClick={QCM}
+        onClick={insta}
         style={{
           fontFamily: "funny",
           background: "linear-gradient(135deg, #3b82f6, #60a5fa)",
@@ -104,7 +90,7 @@ export default function Choice() {
         onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
         onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
       >
-        Teste toi pour savoir si tu es un pro de la guindaille 2.0
+        Tu veux en savoir plus sur la guindaille 2.0 ? 
       </button>
 
       <div
@@ -143,7 +129,7 @@ export default function Choice() {
         onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
         onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
       >
-        Prouve que tu es le meilleur guindailleur 2.0
+        Retour à l'accueil
       </button>
 
       <div style={logoLeftStyle}>

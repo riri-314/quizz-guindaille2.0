@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import type { CSSProperties } from "react";
 import universSante from "/univers-sante.png";
 import guindaille from "/guindaille.png";
-import arrowImage from "/arrow2.png";
 
 export default function End() {
   const navigate = useNavigate();
@@ -52,21 +51,7 @@ export default function End() {
         textAlign: "center",
       }}
     >
-      <img
-        src={arrowImage}
-        alt="Retour"
-        onClick={() => navigate("/hello")}
-        style={{
-          position: "absolute",
-          top: "1rem",
-          left: "1rem",
-          height: "2.5rem",
-          width: "auto",
-          cursor: "pointer",
-          zIndex: 10,
-          transform: "scaleX(-1)",
-        }}
-      />
+
 
 
       <button

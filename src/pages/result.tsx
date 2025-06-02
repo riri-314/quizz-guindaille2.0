@@ -8,7 +8,7 @@ export default function Score() {
   const navigate = useNavigate();
 
   const handleNext = () => {
-    navigate("/next"); // remplace "/next" par la bonne route
+    navigate("/classement"); // remplace "/next" par la bonne route
   };
 
   const logoLeftStyle: CSSProperties = {

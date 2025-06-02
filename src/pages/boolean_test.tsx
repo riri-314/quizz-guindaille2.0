@@ -17,7 +17,7 @@ export default function BooleanPage() {
     setButtonState("loading");
     setTimeout(() => {
       setButtonState("done");
-    }, 5000);
+    }, 200);
   };
 
   const loaderStyle: CSSProperties = {

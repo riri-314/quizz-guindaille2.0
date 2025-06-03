@@ -1,38 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import type { CSSProperties } from "react";
-import universSante from "/univers-sante.png";
-import guindaille from "/guindaille.png";
-import arrowImage from "/arrow2.png";
+import Logos from "../components/Logos";
 
 export default function Score() {
   const navigate = useNavigate();
 
   const handleNext = () => {
     navigate("/classement"); // remplace "/next" par la bonne route
-  };
-
-  const logoLeftStyle: CSSProperties = {
-    position: "absolute",
-    bottom: "1rem",
-    left: "1rem",
-  };
-
-  const logoRightStyle: CSSProperties = {
-    position: "absolute",
-    bottom: "1.5rem",
-    right: "1rem",
-  };
-
-  const logoImageStyleL: CSSProperties = {
-    height: "50px",
-    width: "auto",
-    objectFit: "contain",
-  };
-
-  const logoImageStyleR: CSSProperties = {
-    height: "40px",
-    width: "auto",
-    objectFit: "contain",
   };
 
   const titleStyle: CSSProperties = {
@@ -135,22 +109,6 @@ export default function Score() {
           padding: "1rem",
         }}
       >
-        <img
-          src={arrowImage}
-          alt="Retour"
-          onClick={() => navigate("/hello")}
-          style={{
-            position: "absolute",
-            top: "1rem",
-            left: "1rem",
-            height: "2.5rem",
-            width: "auto",
-            cursor: "pointer",
-            zIndex: 10,
-            transform: "scaleX(-1)",
-          }}
-        />
-
         <div style={titleStyle}>Ton score est de</div>
         <div style={scoreStyle}>
           12 <span style={{ fontSize: "3rem" }}>/</span> 15
@@ -164,21 +122,7 @@ export default function Score() {
         >
           Suivant
         </button>
-
-        <div style={logoLeftStyle}>
-          <img
-            src={universSante}
-            alt="Univers Santé logo"
-            style={logoImageStyleL}
-          />
-        </div>
-        <div style={logoRightStyle}>
-          <img
-            src={guindaille}
-            alt="Guindaille 2.0 logo"
-            style={logoImageStyleR}
-          />
-        </div>
+        <Logos />
       </div>
     </>
   );

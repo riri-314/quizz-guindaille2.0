@@ -1,7 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import type { CSSProperties } from "react";
-import universSante from "/univers-sante.png";
-import guindaille from "/guindaille.png";
+import Logos from "../components/Logos";
 
 export default function End() {
   const navigate = useNavigate();
@@ -12,30 +10,6 @@ export default function End() {
 
   const SimpleText = () => {
     navigate("/choice");
-  };
-
-  const logoLeftStyle: CSSProperties = {
-    position: "absolute",
-    bottom: "1rem",
-    left: "1rem",
-  };
-
-  const logoRightStyle: CSSProperties = {
-    position: "absolute",
-    bottom: "1.5rem",
-    right: "1rem",
-  };
-
-  const logoImageStyleL: CSSProperties = {
-    height: "50px",
-    width: "auto",
-    objectFit: "contain" as const,
-  };
-
-  const logoImageStyleR: CSSProperties = {
-    height: "40px",
-    width: "auto",
-    objectFit: "contain" as const,
   };
 
   return (
@@ -51,9 +25,6 @@ export default function End() {
         textAlign: "center",
       }}
     >
-
-
-
       <button
         onClick={insta}
         style={{
@@ -75,7 +46,7 @@ export default function End() {
         onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
         onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
       >
-        Tu veux en savoir plus sur la guindaille 2.0 ? 
+        Tu veux en savoir plus sur la guindaille 2.0 ?
       </button>
 
       <div
@@ -116,21 +87,7 @@ export default function End() {
       >
         Retour à l'accueil
       </button>
-
-      <div style={logoLeftStyle}>
-        <img
-          src={universSante}
-          alt="Univers Santé logo"
-          style={logoImageStyleL}
-        />
-      </div>
-      <div style={logoRightStyle}>
-        <img
-          src={guindaille}
-          alt="Guindaille 2.0 logo"
-          style={logoImageStyleR}
-        />
-      </div>
+      <Logos />
     </div>
   );
 }

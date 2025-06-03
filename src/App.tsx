@@ -11,8 +11,13 @@ import QCM from "./pages/qcm";
 import End from "./pages/end";
 import Score from "./pages/result";
 import Classement from "./pages/classement";
+import ProtectedRoute from "./components/ProtectedRoutes";
+import Unknow from "./pages/404";
+//import { useData } from "./provider/dataProvider";
 
 function App() {
+  //const {data, loadingData} = useData();
+
   useEffect(() => {
     const setRealViewport = () => {
       const vh = window.innerHeight * 0.01;
@@ -39,20 +44,17 @@ function App() {
   };
   return (
     <div style={containerStyle}>
-
       <Routes>
-        <Route path="/" element={<Hello/>} />
-        <Route path="/about" element={<>Yahouu 2</>} />
-        <Route path="/choice" element={<Choice/>} />
-        <Route path="/guest" element={<GuestPage/>} />
-        <Route path="/hello" element={<Hello/>} />
-        <Route path="/picto" element={<Picto/>} />
-        <Route path="/test" element={<BooleanPage/>} />
-        <Route path="/qcm" element={<QCM/>} />
-        <Route path="/end" element={<End/>} />
-        <Route path="/score" element={<Score/>} />
-        <Route path="/classement" element={<Classement/>} />
-        <Route path="*" element={<>Yahouu 3</>} />
+        <Route path="/" element={<Hello />} />
+        <Route path="/guest" element={<GuestPage />} />
+        <Route path="/choice" element={<Choice />} />
+        <Route path="/picto" element={<ProtectedRoute><Picto /></ProtectedRoute>} />
+        <Route path="/test" element={<ProtectedRoute><BooleanPage /></ProtectedRoute>} />
+        <Route path="/qcm" element={<ProtectedRoute><QCM /></ProtectedRoute>} />
+        <Route path="/score" element={<ProtectedRoute><Score /></ProtectedRoute>} />
+        <Route path="/classement" element={<ProtectedRoute><Classement /></ProtectedRoute>} />
+        <Route path="/end" element={<End />} />
+        <Route path="*" element={<Unknow/>} />
       </Routes>
     </div>
   );
@@ -60,4 +62,4 @@ function App() {
 
 export default App;
 
-// remove login, signup, only local account
+// loading, error, 404

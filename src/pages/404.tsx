@@ -1,17 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import type { CSSProperties } from "react";
-import Arrow from "../components/Arrow";
 import Logos from "../components/Logos";
 
-export default function Choice() {
+export default function Unknow() {
   const navigate = useNavigate();
 
-  const QCM = () => {
-    navigate("/qcm");
-  };
-
   const SimpleText = () => {
-    navigate("/picto");
+    navigate("/");
   };
 
   const textTitleStyle: CSSProperties = {
@@ -40,49 +35,7 @@ export default function Choice() {
         textAlign: "center",
       }}
     >
-
-      <Arrow path="/guest"/>
-
-      <div style={textTitleStyle}>Fait un choix !</div>
-
-      <button
-        onClick={QCM}
-        style={{
-          fontFamily: "funny",
-          background: "linear-gradient(135deg, #3b82f6, #60a5fa)",
-          color: "white",
-          padding: "0.85rem 1.75rem",
-          borderRadius: "999px",
-          border: "none",
-          marginBottom: "0.75rem",
-          width: "100%",
-          maxWidth: "320px",
-          fontWeight: "bold",
-          fontSize: "1rem",
-          boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
-          cursor: "pointer",
-          transition: "transform 0.2s",
-        }}
-        onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
-        onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
-      >
-        Teste toi pour savoir si tu es un pro de la guindaille 2.0
-      </button>
-
-      <div
-        style={{
-          fontFamily: "funny",
-          margin: "0.5rem 0",
-          fontSize: "0.9rem",
-          fontWeight: "bold",
-          backgroundColor: "rgba(255, 255, 255, 0.1)",
-          padding: "0.25rem 1rem",
-          borderRadius: "999px",
-          boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-        }}
-      >
-        ou
-      </div>
+      <div style={textTitleStyle}>Erreur 404 !</div>
 
       <button
         onClick={SimpleText}
@@ -105,10 +58,9 @@ export default function Choice() {
         onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
         onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
       >
-        Prouve que tu es le meilleur guindailleur 2.0
+        Retour à l'accueil
       </button>
-
-        <Logos/>
+      <Logos />
     </div>
   );
 }

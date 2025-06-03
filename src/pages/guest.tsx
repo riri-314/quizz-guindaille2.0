@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { CSSProperties } from "react";
-import universSante from "/univers-sante.png";
-import guindaille from "/guindaille.png";
-import arrowImage from "/arrow2.png";
+import Arrow from "../components/Arrow";
+import Logos from "../components/Logos";
 
 export default function GuestPage() {
   const navigate = useNavigate();
@@ -55,30 +54,6 @@ export default function GuestPage() {
     done: "Validé 🎉",
   };
 
-  const logoLeftStyle: CSSProperties = {
-    position: "absolute",
-    bottom: "1rem",
-    left: "1rem",
-  };
-
-  const logoRightStyle: CSSProperties = {
-    position: "absolute",
-    bottom: "1.5rem",
-    right: "1rem",
-  };
-
-  const logoImageStyleL: CSSProperties = {
-    height: "50px",
-    width: "auto",
-    objectFit: "contain" as const,
-  };
-
-  const logoImageStyleR: CSSProperties = {
-    height: "40px",
-    width: "auto",
-    objectFit: "contain" as const,
-  };
-
   return (
     <div
       style={{
@@ -110,21 +85,7 @@ export default function GuestPage() {
           }
         }
       `}</style>
-      <img
-        src={arrowImage}
-        alt="Retour"
-        onClick={() => navigate("/hello")}
-        style={{
-          position: "absolute",
-          top: "1rem",
-          left: "1rem",
-          height: "2.5rem",
-          width: "auto",
-          cursor: "pointer",
-          zIndex: 10,
-          transform: "scaleX(-1)",
-        }}
-      />
+      <Arrow path="/" />
       <h1
         style={{
           fontFamily: "funny",
@@ -204,20 +165,7 @@ export default function GuestPage() {
         </button>
       </div>
 
-      <div style={logoLeftStyle}>
-        <img
-          src={universSante}
-          alt="Univers Santé logo"
-          style={logoImageStyleL}
-        />
-      </div>
-      <div style={logoRightStyle}>
-        <img
-          src={guindaille}
-          alt="Guindaille 2.0 logo"
-          style={logoImageStyleR}
-        />
-      </div>
+      <Logos />
     </div>
   );
 }

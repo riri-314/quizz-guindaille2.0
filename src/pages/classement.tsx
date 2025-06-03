@@ -3,6 +3,7 @@ import { FixedSizeList as List } from "react-window";
 import universSante from "/univers-sante.png";
 import guindaille from "/guindaille.png";
 import { useNavigate } from "react-router-dom";
+import Arrow from "../components/Arrow";
 
 export default function Classement() {
   const navigate = useNavigate();
@@ -103,7 +104,7 @@ export default function Classement() {
     cursor: "pointer",
     transition: "all 0.3s ease",
     zIndex: 10,
-    marginBottom: "5.5rem"
+    marginBottom: "5.5rem",
   };
 
   const Row = ({ index, style }: { index: number; style: CSSProperties }) => {
@@ -121,59 +122,63 @@ export default function Classement() {
   };
 
   return (
-    <div
-      style={{
-        height: "100vh",
-        overflow: "hidden",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        position: "relative",
-        maxWidth: "500px",
-      }}
-    >
-      <div style={titleStyle}>CLASSEMENT</div>
-      <div style={classementStyle}>Ton classement 17/300</div>
-
-      <List
-        height={500}
-        itemCount={scores.length}
-        itemSize={60}
-        width={300}
+    <>
+      <Arrow path="/score" />
+      <div
         style={{
-          WebkitMaskImage:
-            "linear-gradient(to bottom, black 60%, transparent 100%)",
-          maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
-          WebkitMaskSize: "60% 100%",
-          maskSize: "60% 100%",
-          marginBottom: "2rem",
+          height: "100vh",
+          overflow: "hidden",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          position: "relative",
+          maxWidth: "500px",
         }}
       >
-        {Row}
-      </List>
-      <button
-        style={buttonStyle}
-        onClick={handleNext}
-        onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
-        onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
-      >
-        Suivant
-      </button>
-      {/* Fixed logos that never move */}
-      <div style={{ position: "fixed", bottom: "1rem", left: "1rem" }}>
-        <img
-          src={universSante}
-          alt="Univers Santé logo"
-          style={logoImageStyleL}
-        />
+        <div style={titleStyle}>CLASSEMENT</div>
+        <div style={classementStyle}>Ton classement 17/300</div>
+
+        <List
+          height={500}
+          itemCount={scores.length}
+          itemSize={60}
+          width={300}
+          style={{
+            WebkitMaskImage:
+              "linear-gradient(to bottom, black 60%, transparent 100%)",
+            maskImage:
+              "linear-gradient(to bottom, black 60%, transparent 100%)",
+            WebkitMaskSize: "60% 100%",
+            maskSize: "60% 100%",
+            marginBottom: "2rem",
+          }}
+        >
+          {Row}
+        </List>
+        <button
+          style={buttonStyle}
+          onClick={handleNext}
+          onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+          onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+        >
+          Suivant
+        </button>
+        {/* Fixed logos that never move */}
+        <div style={{ position: "fixed", bottom: "1rem", left: "1rem" }}>
+          <img
+            src={universSante}
+            alt="Univers Santé logo"
+            style={logoImageStyleL}
+          />
+        </div>
+        <div style={{ position: "fixed", bottom: "1.2rem", right: "1rem" }}>
+          <img
+            src={guindaille}
+            alt="Guindaille 2.0 logo"
+            style={logoImageStyleR}
+          />
+        </div>
       </div>
-      <div style={{ position: "fixed", bottom: "1.2rem", right: "1rem" }}>
-        <img
-          src={guindaille}
-          alt="Guindaille 2.0 logo"
-          style={logoImageStyleR}
-        />
-      </div>
-    </div>
+    </>
   );
 }

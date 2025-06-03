@@ -1,10 +1,9 @@
 import { useSnapCarousel } from "@rsagiev/react-snap-carousel-19";
 import testImage from "/logo.webp";
-import arrowImage from "/arrow2.png";
 import { useNavigate } from "react-router-dom";
 import type { CSSProperties } from "react";
-import universSante from "/univers-sante.png";
-import guindaille from "/guindaille.png";
+import Arrow from "../components/Arrow";
+import Logos from "../components/Logos";
 
 const items = [
   {
@@ -72,29 +71,6 @@ export default function Picto() {
     padding: "1rem",
     textAlign: "center",
   };
-  const logoLeftStyle: CSSProperties = {
-    position: "absolute",
-    bottom: "1rem",
-    left: "1rem",
-  };
-
-  const logoRightStyle: CSSProperties = {
-    position: "absolute",
-    bottom: "1.5rem",
-    right: "1rem",
-  };
-
-  const logoImageStyleL: CSSProperties = {
-    height: "50px",
-    width: "auto",
-    objectFit: "contain" as const,
-  };
-
-  const logoImageStyleR: CSSProperties = {
-    height: "40px",
-    width: "auto",
-    objectFit: "contain" as const,
-  };
 
   const textDescriptionStyle: CSSProperties = {
     fontFamily: "funny",
@@ -110,21 +86,7 @@ export default function Picto() {
 
   return (
     <>
-      <img
-        src={arrowImage}
-        alt="Retour"
-        onClick={() => navigate("/choice")}
-        style={{
-          position: "absolute",
-          top: "1rem",
-          left: "1rem",
-          height: "2.5rem",
-          width: "auto",
-          cursor: "pointer",
-          zIndex: 10,
-          transform: "scaleX(-1)",
-        }}
-      />
+      <Arrow path="/choice"/>
       <div style={textTitleStyle}>Fait un choix !</div>
       <div style={textSubTitleStyle}>Click sur un picto pour te tester</div>
 
@@ -191,20 +153,7 @@ export default function Picto() {
           ))}
         </div>
       </div>
-      <div style={logoLeftStyle}>
-        <img
-          src={universSante}
-          alt="Univers Santé logo"
-          style={logoImageStyleL}
-        />
-      </div>
-      <div style={logoRightStyle}>
-        <img
-          src={guindaille}
-          alt="Guindaille 2.0 logo"
-          style={logoImageStyleR}
-        />
-      </div>
+      <Logos/>
     </>
   );
 }

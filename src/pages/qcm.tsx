@@ -4,7 +4,7 @@ import { useState, type CSSProperties } from "react";
 
 export default function DesoulerQuestion() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState<boolean>(false);
+  //const [loading, setLoading] = useState<boolean>(false);
   const [answered, setAnswered] = useState<boolean>(false);
   const [correct, setCorrect] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
@@ -41,8 +41,8 @@ export default function DesoulerQuestion() {
 
   const handleClick = (correct: boolean) => {
     if (answered) return; // Prevent multiple clicks after answering
-    console.log("Clicked on", correct ? "correct" : "incorrect", "answer");
-    setLoading(true);
+    //console.log("Clicked on", correct ? "correct" : "incorrect", "answer");
+    //setLoading(true);
 
     //setTimeout(() => {
     if (correct) {
@@ -50,12 +50,12 @@ export default function DesoulerQuestion() {
     }
     setCorrect(correct);
     setAnswered(true);
-    setLoading(false);
+    //setLoading(false);
     //}, 200);
   };
 
   const nextQuestion = () => {
-    setLoading(false);
+    //setLoading(false);
     setAnswered(false);
     setCorrect(false);
     setQuestion(question + 1); // Increment the question index
@@ -154,7 +154,7 @@ export default function DesoulerQuestion() {
                   cursor: "pointer",
                 }}
               >
-                {loading ? (
+                {false ? (
                   <>
                     <div style={loaderStyle}></div>
                     <span>{answer.text}</span>

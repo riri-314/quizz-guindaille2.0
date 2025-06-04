@@ -18,6 +18,16 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
   const [loadingData, setLoadingData] = useState<boolean>(true);
 
   useEffect(() => {
+    console.log(`
+                              2025 made by
+██╗  ██╗███████╗███╗   ██╗██████╗ ██╗    ██████╗ ██╗██╗  ██╗███████╗████████╗
+██║  ██║██╔════╝████╗  ██║██╔══██╗██║    ██╔══██╗██║██║  ██║██╔════╝╚══██╔══╝
+███████║█████╗  ██╔██╗ ██║██████╔╝██║    ██████╔╝██║███████║█████╗     ██║   
+██╔══██║██╔══╝  ██║╚██╗██║██╔══██╗██║    ██╔═══╝ ██║██╔══██║██╔══╝     ██║   
+██║  ██║███████╗██║ ╚████║██║  ██║██║    ██║     ██║██║  ██║███████╗   ██║   
+╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝    ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝   ╚═╝   
+                            Guindaille 2.0 🍻
+  `);
     const fetchData = async () => {
       setLoadingData(true);
       try {
@@ -41,17 +51,6 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
     fetchData();
   }, []);
 
-  //const RouterContent = (children: any) => {
-  //  //load the full app only of the scanner data is loaded (we need the current edition id)
-  //  if (!data && loadingData) {
-  //    return <div>Loading</div>;
-  //  } else if (!data && !loadingData) {
-  //    return <div>error charging data</div>;
-  //  } else {
-  //    return children;
-  //  }
-  //};
-
   return (
     <DataContext.Provider
       value={{
@@ -63,7 +62,6 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
     </DataContext.Provider>
   );
 };
-
 
 export const useData = () => {
   return useContext(DataContext) as DataContextValue;

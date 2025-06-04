@@ -7,7 +7,7 @@ export default function Score() {
   const location = useLocation();
   const { score, question } = location.state || {};
 
-  console.log("Score:", score, "Question:", question);
+  //console.log("Score:", score, "Question:", question);
 
   const handleNext = () => {
     navigate("/classement", {

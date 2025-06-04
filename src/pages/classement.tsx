@@ -2,15 +2,17 @@ import type { CSSProperties } from "react";
 import { FixedSizeList as List } from "react-window";
 import universSante from "/univers-sante.png";
 import guindaille from "/guindaille.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Arrow from "../components/Arrow";
 
 export default function Classement() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { score, question } = location.state || {};
 
   const scores = Array.from({ length: 10000 }, (_, i) => ({
     position: i + 1,
-    name: `Kot zddede{i + 1}`,
+    name: `Kot zddede ${i + 1}`,
   }));
 
   const handleNext = () => {
@@ -123,7 +125,15 @@ export default function Classement() {
 
   return (
     <>
-      <Arrow path="/score" />
+      <Arrow
+        path="/score"
+        args={{
+          state: {
+            score: score,
+            question: question,
+          },
+        }}
+      />
       <div
         style={{
           height: "100vh",

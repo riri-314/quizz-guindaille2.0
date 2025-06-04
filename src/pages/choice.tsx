@@ -7,7 +7,11 @@ export default function Choice() {
   const navigate = useNavigate();
 
   const QCM = () => {
-    navigate("/qcm");
+    navigate("/qcm", {
+      state: {
+        question: 0,
+      },
+    });
   };
 
   const SimpleText = () => {
@@ -40,8 +44,7 @@ export default function Choice() {
         textAlign: "center",
       }}
     >
-
-      <Arrow path="/guest"/>
+      <Arrow path="/guest" />
 
       <div style={textTitleStyle}>Fait un choix !</div>
 
@@ -108,7 +111,7 @@ export default function Choice() {
         Prouve que tu es le meilleur guindailleur 2.0
       </button>
 
-        <Logos/>
+      <Logos />
     </div>
   );
 }

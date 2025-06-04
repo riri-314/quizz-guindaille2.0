@@ -2,17 +2,18 @@ import arrowImage from "/arrow2.png";
 import { useNavigate } from "react-router-dom";
 
 type ArrowProps = {
-  path: string;
+  path: any;
+  args?: any;
 };
 
-export default function Arrow({ path }: ArrowProps) {
+export default function Arrow({ path, args }: ArrowProps) {
   const navigate = useNavigate();
   return (
     <>
       <img
         src={arrowImage}
         alt="Retour"
-        onClick={() => navigate(path)}
+        onClick={() => navigate(path, args)}
         style={{
           position: "absolute",
           top: "1rem",

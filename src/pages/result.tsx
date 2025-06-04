@@ -1,12 +1,21 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import type { CSSProperties } from "react";
 import Logos from "../components/Logos";
 
 export default function Score() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { score, question } = location.state || {};
+
+  console.log("Score:", score, "Question:", question);
 
   const handleNext = () => {
-    navigate("/classement"); // remplace "/next" par la bonne route
+    navigate("/classement", {
+      state: {
+        score: score,
+        question: question,
+      },
+    });
   };
 
   const titleStyle: CSSProperties = {
@@ -111,7 +120,7 @@ export default function Score() {
       >
         <div style={titleStyle}>Ton score est de</div>
         <div style={scoreStyle}>
-          12 <span style={{ fontSize: "3rem" }}>/</span> 15
+          {score} <span style={{ fontSize: "3rem" }}>/</span> {question}
         </div>
 
         <button

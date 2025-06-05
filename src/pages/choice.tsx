@@ -37,13 +37,6 @@ export default function Choice() {
           (validQuizzes.length > 0 ? validQuizzes.length : allQuizzes.length)
       )
     ];
-
-    //setQuiz(selectedQuiz);
-
-    //console.log("Selected quiz:", selectedQuiz);
-    //console.log("Selected quiz, questions:", selectedQuiz.questions);
-    //console.log("question index:", question);
-    //console.log("Selected quiz, selected question:", selectedQuiz.questions[2]);
     return selectedQuiz;
   };
 

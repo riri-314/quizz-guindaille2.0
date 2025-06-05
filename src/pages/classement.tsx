@@ -5,6 +5,8 @@ import guindaille from "/guindaille.png";
 import { useNavigate, useLocation } from "react-router-dom";
 import Arrow from "../components/Arrow";
 import { useData } from "../provider/dataProvider";
+import { db } from "../firebase_config";
+import { doc, updateDoc } from "firebase/firestore/lite";
 
 export default function Classement() {
   const { data } = useData();
@@ -20,17 +22,38 @@ export default function Classement() {
   type ScoreData = Record<string, number>;
 
   function sortScores(data: ScoreData) {
-    const entries = Object.entries(data);
-    const sorted = entries
-      .sort(([, scoreA], [, scoreB]) => scoreB - scoreA) // sort descending by score
-      .map(([name, score], index) => ({
-        position: index + 1,
-        name: name,
-        score: score,
-      }));
+    try {
+      if (typeof data !== "object" || data === null)
+        throw new Error("Data is not a valid object");
 
-    //console.log("Sorted scores:", sorted);
-    return sorted;
+      const entries = Object.entries(data).filter(
+        ([key, value]) =>
+          typeof key === "string" &&
+          typeof value === "number" &&
+          Number.isFinite(value)
+      );
+
+      if (entries.length === 0) throw new Error("No valid entries to sort");
+
+      const sorted = entries
+        .sort(([, scoreA], [, scoreB]) => scoreB - scoreA)
+        .map(([name, score], index) => ({
+          position: index + 1,
+          name,
+          score,
+        }));
+
+      return sorted;
+    } catch (e) {
+      console.warn("sortScores failed:", e);
+      return [
+        {
+          position: 1,
+          name: "MY USER",
+          score: finalScore(),
+        },
+      ];
+    }
   }
 
   function finalScore() {
@@ -71,12 +94,28 @@ export default function Classement() {
     }
   }, []);
 
-  const handleNext = () => {
+  async function updateScore() {
+    const personalScore = finalScore();
+    // Update the score in the database
+    try {
+      await updateDoc(doc(db, "public", "quizzdata"), {
+        "classement.yahou": personalScore,
+      });
+    } catch (error) {
+      console.log("Error updating score in database:", error);
+    }
+  }
+
+  const handleNext = async () => {
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      navigate("/end"); // remplace "/next" par la bonne route
-    }, 200);
+    if (publishScore) {
+      await updateScore();
+    }
+    navigate("/end");
+    //setTimeout(() => {
+    //  setLoading(false);
+    //  navigate("/end"); // remplace "/next" par la bonne route
+    //}, 200);
   };
 
   const loaderStyle: CSSProperties = {

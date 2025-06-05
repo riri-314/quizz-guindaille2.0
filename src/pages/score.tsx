@@ -5,7 +5,7 @@ import Logos from "../components/Logos";
 export default function Score() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { score, question } = location.state || {};
+  const { score, question, timeDiff } = location.state || {};
 
   //console.log("Score:", score, "Question:", question);
 
@@ -14,6 +14,7 @@ export default function Score() {
       state: {
         score: score,
         question: question,
+        timeDiff: timeDiff,
       },
     });
   };

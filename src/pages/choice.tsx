@@ -1,15 +1,57 @@
 import { useNavigate } from "react-router-dom";
-import type { CSSProperties } from "react";
+import { type CSSProperties } from "react";
 import Arrow from "../components/Arrow";
 import Logos from "../components/Logos";
+import { useData } from "../provider/dataProvider";
 
 export default function Choice() {
   const navigate = useNavigate();
+  const { data } = useData();
+
+  const selectedQuiz = () => {
+    if (!data?.quizzdata) {
+      // should not happen, but just in case
+      navigate("/error");
+      return;
+    }
+
+    const allQuizzes = Object.values(data.quizzdata);
+    if (allQuizzes.length === 0) {
+      // No quizzes available, navigate to error page, should not happen, but just in case
+      navigate("/error");
+      return;
+    }
+
+    const now = new Date();
+    const validQuizzes = allQuizzes.filter((quiz: any) => {
+      const start = quiz.start?.toDate?.() ?? new Date(quiz.start);
+      const stop = quiz.stop?.toDate?.() ?? new Date(quiz.stop);
+      return start <= now && now <= stop;
+    });
+
+    const selectedQuiz: any = (
+      validQuizzes.length > 0 ? validQuizzes : allQuizzes
+    )[
+      Math.floor(
+        Math.random() *
+          (validQuizzes.length > 0 ? validQuizzes.length : allQuizzes.length)
+      )
+    ];
+
+    //setQuiz(selectedQuiz);
+
+    //console.log("Selected quiz:", selectedQuiz);
+    //console.log("Selected quiz, questions:", selectedQuiz.questions);
+    //console.log("question index:", question);
+    //console.log("Selected quiz, selected question:", selectedQuiz.questions[2]);
+    return selectedQuiz;
+  };
 
   const QCM = () => {
     navigate("/qcm", {
       state: {
-        question: 0,
+        quiz: selectedQuiz(),
+        start: new Date(),
       },
     });
   };

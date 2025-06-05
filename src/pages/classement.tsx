@@ -1,24 +1,92 @@
-import type { CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { FixedSizeList as List } from "react-window";
 import universSante from "/univers-sante.png";
 import guindaille from "/guindaille.png";
 import { useNavigate, useLocation } from "react-router-dom";
 import Arrow from "../components/Arrow";
+import { useData } from "../provider/dataProvider";
 
 export default function Classement() {
+  const { data } = useData();
   const navigate = useNavigate();
   const location = useLocation();
-  const { score, question } = location.state || {};
+  const { score, question, timeDiff } = location.state || {};
+  //console.log("Score:", score, "Question:", question, "Time diff:", timeDiff);
+  const [sortedScores, setSortedScores] = useState<any[]>([]);
+  const [personalScore, setPersonalScore] = useState<number>(0);
+  const [publishScore, setPublishScore] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const scores = Array.from({ length: 10000 }, (_, i) => ({
-    position: i + 1,
-    name: `Kot zddede ${i + 1}`,
-  }));
+  type ScoreData = Record<string, number>;
+
+  function sortScores(data: ScoreData) {
+    const entries = Object.entries(data);
+    const sorted = entries
+      .sort(([, scoreA], [, scoreB]) => scoreB - scoreA) // sort descending by score
+      .map(([name, score], index) => ({
+        position: index + 1,
+        name: name,
+        score: score,
+      }));
+
+    //console.log("Sorted scores:", sorted);
+    return sorted;
+  }
+
+  function finalScore() {
+    const accuracy = score / question + 1;
+    const rawScore = accuracy * (100000 / timeDiff);
+    const intScore = Math.round(rawScore * 100000);
+    //console.log("Final score:", intScore);
+    return intScore;
+  }
+
+  function getPositionFor(
+    data: any[],
+    targetName: string,
+    targetScore: number
+  ): number | null {
+    const entry = data.find(
+      (item) => item.name === targetName && item.score === targetScore
+    );
+    return entry ? entry.position : null; // null if not found
+  }
+
+  useEffect(() => {
+    try {
+      let classement = data?.classement;
+      const personalScore = finalScore();
+      classement["MY USER"] = personalScore; // Add personal score to classement
+      const sortedClassement: any = sortScores(classement);
+      const myIndex = getPositionFor(
+        sortedClassement,
+        "MY USER",
+        personalScore
+      );
+      setSortedScores(sortedClassement);
+      setPersonalScore(myIndex || 0); // Set personal score position, default to 0 if not found
+    } catch (error) {
+      console.error("Error in DesoulerQuestion component:", error);
+      navigate("/error");
+    }
+  }, []);
 
   const handleNext = () => {
-    navigate("/end"); // remplace "/next" par la bonne route
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      navigate("/end"); // remplace "/next" par la bonne route
+    }, 200);
   };
 
+  const loaderStyle: CSSProperties = {
+    width: "1.2rem",
+    height: "1.2rem",
+    border: "3px solid rgba(255, 255, 255, 0.4)",
+    borderTop: "3px solid white",
+    borderRadius: "50%",
+    animation: "spin 0.6s linear infinite",
+  };
   const titleStyle = {
     fontFamily: "funny",
     marginBottom: "1.5rem",
@@ -110,7 +178,7 @@ export default function Classement() {
   };
 
   const Row = ({ index, style }: { index: number; style: CSSProperties }) => {
-    const entry = scores[index];
+    const entry = sortedScores[index];
     return (
       <div
         style={{ ...entryContainerStyle, ...style }}
@@ -125,12 +193,30 @@ export default function Classement() {
 
   return (
     <>
+      <style>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
       <Arrow
         path="/score"
         args={{
           state: {
             score: score,
             question: question,
+            timeDiff: timeDiff,
           },
         }}
       />
@@ -146,11 +232,13 @@ export default function Classement() {
         }}
       >
         <div style={titleStyle}>CLASSEMENT</div>
-        <div style={classementStyle}>Ton classement 17/300</div>
+        <div style={classementStyle}>
+          Ton classement {personalScore}/{sortedScores.length}
+        </div>
 
         <List
           height={500}
-          itemCount={scores.length}
+          itemCount={sortedScores.length}
           itemSize={60}
           width={300}
           style={{
@@ -168,11 +256,45 @@ export default function Classement() {
         <button
           style={buttonStyle}
           onClick={handleNext}
+          disabled={loading}
           onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
           onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
         >
-          Suivant
+          {loading ? (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "0.75rem",
+              }}
+            >
+              <div style={loaderStyle}></div>
+              <span>chargement</span>
+            </div>
+          ) : (
+            "Terminer"
+          )}{" "}
         </button>
+        <div
+          style={{
+            marginTop: "-5rem",
+            marginBottom: "5rem",
+            textAlign: "center",
+          }}
+        >
+          <label
+            style={{ fontFamily: "funny", color: "white", fontSize: "1rem" }}
+          >
+            <input
+              type="checkbox"
+              checked={publishScore}
+              onChange={(e) => setPublishScore(e.target.checked)}
+              style={{ marginRight: "0.5rem" }}
+            />
+            publier mon résultat en public
+          </label>
+        </div>
         {/* Fixed logos that never move */}
         <div style={{ position: "fixed", bottom: "1rem", left: "1rem" }}>
           <img

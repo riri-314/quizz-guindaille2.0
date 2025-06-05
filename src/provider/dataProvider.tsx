@@ -35,6 +35,7 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
         const q = doc(db, "public", "quizzdata");
         const docSnap = await getDoc(q);
         if (docSnap.exists()) {
+          //console.log("Document data:", docSnap.data());
           setData(docSnap.data());
         } else {
           console.error("No such document!");
@@ -49,6 +50,14 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
     };
 
     fetchData();
+
+    // Preload the pictures in the backgroud for faster loading time, YAHOUUU GO FAST BABY
+    const imageUrls = ["/logo.webp"];
+
+    imageUrls.forEach((url) => {
+      const img = new Image();
+      img.src = url;
+    });
   }, []);
 
   return (

@@ -1,71 +1,57 @@
 import Logos from "../components/Logos";
-import { useNavigate } from "react-router-dom";
-import { useState, type CSSProperties } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState, type CSSProperties } from "react";
 
 export default function DesoulerQuestion() {
   const navigate = useNavigate();
-  //const [loading, setLoading] = useState<boolean>(false);
+  const location = useLocation();
+  const { quiz, start } = location.state || {};
   const [answered, setAnswered] = useState<boolean>(false);
   const [correct, setCorrect] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
   const [question, setQuestion] = useState<number>(0);
+  const [title, setTitle] = useState<string>("");
+  const [questions, setQuestions] = useState<any[]>([]);
+  const [nbQUestions, setNbQuestions] = useState<number>(0);
 
-  const answers1 = [
-    { text: "Boire un café bien serré.", correct: false },
-    { text: "Prendre une douche froide.", correct: false },
-    { text: "Attendre et laisser le corps éliminer l'alcool.", correct: true },
-  ];
+  useEffect(() => {
+    try {
+      const ans = quiz.questions;
+      setNbQuestions(ans.length);
+      setQuestions(ans[question].answers);
+      setTitle(quiz.questions[question].text);
+    } catch (error) {
+      console.error("Error in DesoulerQuestion component:", error);
+      navigate("/error");
+    }
+  }, []);
 
-  const answers2 = [
-    { text: "Boire un café bien serré.", correct: false },
-    { text: "Prendre une douche froide.", correct: false },
-    { text: "Attendre et laisser le corps éliminer l'alcool.", correct: true },
-  ];
-  const answers3 = [
-    { text: "Boire un café bien serré.", correct: false },
-    { text: "Prendre une douche froide.", correct: false },
-    { text: "Attendre et laisser le corps éliminer l'alcool.", correct: true },
-  ];
 
-  const ans = [answers1, answers2, answers3];
-  const answers = ans[question];
-
-  const loaderStyle: CSSProperties = {
-    width: "2rem",
-    height: "2rem",
-    border: "4px solid white",
-    borderTop: "4px solid #3b82f6",
-    borderRadius: "50%",
-    animation: "spin 1s linear infinite",
-  };
 
   const handleClick = (correct: boolean) => {
     if (answered) return; // Prevent multiple clicks after answering
-    //console.log("Clicked on", correct ? "correct" : "incorrect", "answer");
-    //setLoading(true);
-
-    //setTimeout(() => {
     if (correct) {
       setScore(score + 1);
     }
     setCorrect(correct);
     setAnswered(true);
-    //setLoading(false);
-    //}, 200);
   };
 
   const nextQuestion = () => {
-    //setLoading(false);
     setAnswered(false);
     setCorrect(false);
     setQuestion(question + 1); // Increment the question index
-    if (question >= ans.length - 1) {
+    if (question >= nbQUestions - 1) {
       navigate("/score", {
         state: {
           score: score,
           question: question + 1,
+          timeDiff: new Date().getTime() - start.getTime(),
         },
       });
+    } else {
+      setQuestions(quiz.questions[question + 1].answers);
+      setTitle(quiz.questions[question + 1].text);
     }
   };
 
@@ -84,23 +70,6 @@ export default function DesoulerQuestion() {
 
   return (
     <div>
-      <style>{`
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
       {answered && (
         <div style={textTitleStyle}>{!correct ? "Faux ❌" : "Juste ✅"}</div>
       )}
@@ -126,8 +95,7 @@ export default function DesoulerQuestion() {
             fontFamily: "funny",
           }}
         >
-          Quel est le meilleur moyen de dessouler rapidement après une soirée
-          bien arrosée ?
+          {title}
         </div>
         <div
           style={{
@@ -138,7 +106,7 @@ export default function DesoulerQuestion() {
             color: "black",
           }}
         >
-          {answers.map((answer, idx) => {
+          {questions.map((answer: any, idx: any) => {
             const letter = String.fromCharCode(65 + idx);
             return (
               <div
@@ -154,27 +122,20 @@ export default function DesoulerQuestion() {
                   cursor: "pointer",
                 }}
               >
-                {false ? (
-                  <>
-                    <div style={loaderStyle}></div>
-                    <span>{answer.text}</span>
-                  </>
-                ) : (
-                  <>
-                    <span
-                      style={{
-                        border: answered ? "none" : "2px solid #3b82f6",
-                        borderRadius: "999px",
-                        padding: "0.25rem 0.75rem",
-                        fontWeight: "bold",
-                        color: "#3b82f6",
-                      }}
-                    >
-                      {!answered ? letter : answer.correct ? "✔️" : "❌"}
-                    </span>
-                    <span>{answer.text}</span>
-                  </>
-                )}
+                <>
+                  <span
+                    style={{
+                      border: answered ? "none" : "2px solid #3b82f6",
+                      borderRadius: "999px",
+                      padding: "0.25rem 0.75rem",
+                      fontWeight: "bold",
+                      color: "#3b82f6",
+                    }}
+                  >
+                    {!answered ? letter : answer.correct ? "✔️" : "❌"}
+                  </span>
+                  <span>{answer.text}</span>
+                </>
               </div>
             );
           })}
@@ -191,7 +152,7 @@ export default function DesoulerQuestion() {
             animation: "fadeInUp 0.8s ease-out forwards",
             cursor: "pointer",
           }}
-          onClick={() => nextQuestion()} // ← Change this if needed
+          onClick={() => nextQuestion()}
         >
           Suivant →
         </div>

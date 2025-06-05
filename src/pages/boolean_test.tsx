@@ -20,12 +20,12 @@ export default function BooleanPage() {
   };
 
   const loaderStyle: CSSProperties = {
-    width: "2rem",
-    height: "2rem",
-    border: "4px solid white",
-    borderTop: "4px solid #3b82f6",
+    width: "1.2rem",
+    height: "1.2rem",
+    border: "3px solid rgba(255, 255, 255, 0.4)",
+    borderTop: "3px solid white",
     borderRadius: "50%",
-    animation: "spin 1s linear infinite",
+    animation: "spin 0.6s linear infinite",
   };
 
   const buttonText = {

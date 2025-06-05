@@ -9,10 +9,11 @@ import GuestPage from "./pages/guest";
 import Picto from "./pages/picto";
 import QCM from "./pages/qcm";
 import End from "./pages/end";
-import Score from "./pages/result";
+import Score from "./pages/score";
 import Classement from "./pages/classement";
 import ProtectedRoute from "./components/ProtectedRoutes";
 import Unknow from "./pages/404";
+import Error from "./pages/Error";
 //import { useData } from "./provider/dataProvider";
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
         <Route path="/qcm" element={<ProtectedRoute><QCM /></ProtectedRoute>} />
         <Route path="/score" element={<ProtectedRoute><Score /></ProtectedRoute>} />
         <Route path="/classement" element={<ProtectedRoute><Classement /></ProtectedRoute>} />
+        <Route path="/error" element={<Error />} />
         <Route path="/end" element={<End />} />
         <Route path="*" element={<Unknow/>} />
       </Routes>

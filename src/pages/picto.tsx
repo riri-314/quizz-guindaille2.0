@@ -50,8 +50,7 @@ export default function Picto() {
   const navigate = useNavigate();
   const textTitleStyle: CSSProperties = {
     fontFamily: "funny",
-    // position: "absolute", // ❌ remove this line
-    marginBottom: "-1rem", // ✅ space below the title
+    marginBottom: "-1rem",
     color: "white",
     fontWeight: "bold",
     fontSize: "2.5rem",
@@ -62,8 +61,7 @@ export default function Picto() {
   };
   const textSubTitleStyle: CSSProperties = {
     fontFamily: "funny",
-    // position: "absolute", // ❌ remove this line
-    marginBottom: "0.5rem", // ✅ space below the title
+    marginBottom: "0.5rem",
     color: "white",
     fontWeight: "bold",
     fontSize: "1rem",
@@ -74,12 +72,10 @@ export default function Picto() {
 
   const textDescriptionStyle: CSSProperties = {
     fontFamily: "funny",
-    // position: "absolute", // ❌ remove this line
-    marginBottom: "0.5rem", // ✅ space below the title
+    marginBottom: "0.5rem",
     color: "white",
     fontWeight: "bold",
     lineHeight: 1.5,
-    //padding: "1rem",
     paddingTop: "0.5rem",
     textAlign: "center",
   };
@@ -99,7 +95,7 @@ export default function Picto() {
             scrollbarWidth: "none",
             msOverflowStyle: "none",
             scrollSnapType: "x mandatory",
-            scrollPadding: "0 50%", // 👈 add this
+            scrollPadding: "0 50%", 
             padding: 0,
             margin: 0,
             listStyle: "none",
@@ -112,7 +108,7 @@ export default function Picto() {
                 flex: "0 0 auto",
                 width: 250,
                 marginRight: 1,
-                scrollSnapAlign: "center", // 👈 change this from 'start'
+                scrollSnapAlign: "center", 
                 borderRadius: 8,
                 padding: 1,
                 paddingBottom: 0,
@@ -132,7 +128,6 @@ export default function Picto() {
           ))}
         </ul>
 
-        {/* Pagination */}
         <div
           style={{ display: "flex", justifyContent: "center", marginTop: 8 }}
         >

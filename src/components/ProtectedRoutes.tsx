@@ -2,8 +2,9 @@
 import React from "react";
 import { useData } from "../provider/dataProvider";
 import Error from "../pages/Error";
+import Loading from "../pages/Loading";
 
-const Loading = () => <div>Loading...</div>;
+
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { data, loadingData } = useData();

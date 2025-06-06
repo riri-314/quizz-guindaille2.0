@@ -7,6 +7,7 @@ import Arrow from "../components/Arrow";
 import { useData } from "../provider/dataProvider";
 import { db } from "../firebase_config";
 import { doc, updateDoc } from "firebase/firestore/lite";
+import { useUser } from "../provider/userData";
 
 export default function Classement() {
   const { data } = useData();
@@ -18,6 +19,7 @@ export default function Classement() {
   const [personalScore, setPersonalScore] = useState<number>(0);
   const [publishScore, setPublishScore] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const { userData } = useUser();
 
   type ScoreData = Record<string, number>;
 
@@ -49,7 +51,7 @@ export default function Classement() {
       return [
         {
           position: 1,
-          name: "MY USER",
+          name: userData.nickname || "anonymous",
           score: finalScore(),
         },
       ];
@@ -79,11 +81,11 @@ export default function Classement() {
     try {
       let classement = data?.classement;
       const personalScore = finalScore();
-      classement["MY USER"] = personalScore; // Add personal score to classement
+      classement[userData.nickname || "anonymous"] = personalScore; // Add personal score to classement
       const sortedClassement: any = sortScores(classement);
       const myIndex = getPositionFor(
         sortedClassement,
-        "MY USER",
+        userData.nickname || "anonymous",
         personalScore
       );
       setSortedScores(sortedClassement);
@@ -99,7 +101,7 @@ export default function Classement() {
     // Update the score in the database
     try {
       await updateDoc(doc(db, "public", "quizzdata"), {
-        "classement.yahou": personalScore,
+        [`classement.${userData.nickname}`]: personalScore,
       });
     } catch (error) {
       console.log("Error updating score in database:", error);
@@ -112,10 +114,6 @@ export default function Classement() {
       await updateScore();
     }
     navigate("/end");
-    //setTimeout(() => {
-    //  setLoading(false);
-    //  navigate("/end"); // remplace "/next" par la bonne route
-    //}, 200);
   };
 
   const loaderStyle: CSSProperties = {

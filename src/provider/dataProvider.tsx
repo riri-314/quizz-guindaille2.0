@@ -52,7 +52,7 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
     fetchData();
 
     // Preload the pictures in the backgroud for faster loading time, YAHOUUU GO FAST BABY
-    const imageUrls = ["/logo.webp"];
+    const imageUrls = ["pictos/picto1.png", "pictos/picto2.png", "pictos/picto3.png", "pictos/picto4.png", "pictos/picto5.png", "pictos/picto6.png", "pictos/picto7.png", "pictos/picto8.png", "pictos/picto9.png"];
 
     imageUrls.forEach((url) => {
       const img = new Image();

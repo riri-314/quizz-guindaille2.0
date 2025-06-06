@@ -1,23 +1,81 @@
-import { useState } from "react";
-import testImage from "/logo.webp";
+import { useEffect, useState } from "react";
 import type { CSSProperties } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Arrow from "../components/Arrow";
 import Logos from "../components/Logos";
+import { useData } from "../provider/dataProvider";
+import { useUser } from "../provider/userData";
 
 export default function BooleanPage() {
   const navigate = useNavigate();
+  const { data } = useData();
+  const { updateUserData, userData } = useUser();
+  const location = useLocation();
+  const { index } = location.state || { index: 0 }; // Default to 0 if index is not provided
+  const [pictos, setPictos] = useState<any[]>([]);
+
   const [buttonState, setButtonState] = useState<"idle" | "loading" | "done">(
     "idle"
   );
 
-  const handleClick = () => {
+  useEffect(() => {
+    if (
+      data &&
+      typeof data === "object" &&
+      data.pictos &&
+      typeof data.pictos === "object" &&
+      !Array.isArray(data.pictos)
+    ) {
+      const pictosArray = Object.values(data.pictos);
+      // Only update state if data has changed
+      setPictos((prev) => {
+        const prevString = JSON.stringify(prev);
+        const nextString = JSON.stringify(pictosArray);
+        return prevString !== nextString ? pictosArray : prev;
+      });
+    }
+    if (userData.progress && userData.progress[index]) {
+      setButtonState("done");
+    }
+  }, [data]);
+
+  function handleClick(index: number) {
     if (buttonState !== "idle") return;
     setButtonState("loading");
-    setTimeout(() => {
-      setButtonState("done");
-    }, 200);
-  };
+    updateUserData({
+      progress: {
+        ...userData.progress,
+        [index]: true,
+      },
+    });
+    setButtonState("done");
+  }
+
+  function next() {
+    if (index + 1 < pictos.length) {
+      // reset some states
+      if (userData.progress && userData.progress[index + 1]) {
+        setButtonState("done");
+      } else {
+        setButtonState("idle");
+      }
+      navigate("/test", {
+        state: {
+          index: index + 1,
+        },
+      });
+    } else {
+      navigate("/test", {
+        state: {
+          index: 0,
+        },
+      });
+    }
+  }
+
+  function about() {
+    navigate("/end");
+  }
 
   const loaderStyle: CSSProperties = {
     width: "1.2rem",
@@ -133,47 +191,54 @@ export default function BooleanPage() {
       <div style={contentStyle}>
         <div style={bubbleStyle}>
           <img
-            src={testImage}
+            src={`/pictos/picto${index}.png`}
             alt="Recap illustration"
             style={bubbleImageStyle}
           />
           <div style={textOverlayStyle}>
-            <p>
-              À la fin de la soirée,
-              <br />
-              dis ce que t'as bu (quoi et combien).
-              <br />
-              Tu te souviens ? Bien joué.
-              <br />
-              Tu sais pas ?<br />
-              Allez, prochaine fois on note !
-            </p>
+            <p>{pictos[index] ? pictos[index].question : "Chargement..."}</p>
           </div>
         </div>
 
         <button
           style={buttonStyle}
-          onClick={handleClick}
+          onClick={() => handleClick(index)}
           disabled={buttonState !== "idle"}
         >
           {buttonText[buttonState]}
         </button>
 
         {buttonState === "done" && (
-          <div
-            style={{
-              fontFamily: "funny",
-              marginTop: "1rem",
-              fontSize: "1rem",
-              fontWeight: "bold",
-              color: "#fff",
-              animation: "fadeInUp 0.8s ease-out forwards",
-              cursor: "pointer",
-            }}
-            onClick={() => navigate("/test")} // ← Change this if needed
-          >
-            Suivant →
-          </div>
+          <>
+            <div
+              style={{
+                fontFamily: "funny",
+                marginTop: "1rem",
+                fontSize: "1rem",
+                fontWeight: "bold",
+                color: "#fff",
+                animation: "fadeInUp 0.8s ease-out forwards",
+                cursor: "pointer",
+              }}
+              onClick={() => about()} // ← Change this if needed
+            >
+              En savoir plus
+            </div>
+            <div
+              style={{
+                fontFamily: "funny",
+                marginTop: "1rem",
+                fontSize: "1rem",
+                fontWeight: "bold",
+                color: "#fff",
+                animation: "fadeInUp 0.8s ease-out forwards",
+                cursor: "pointer",
+              }}
+              onClick={() => next()} // ← Change this if needed
+            >
+              Suivant →
+            </div>
+          </>
         )}
       </div>
 

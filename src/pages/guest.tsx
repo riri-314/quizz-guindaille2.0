@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import type { CSSProperties } from "react";
 import Arrow from "../components/Arrow";
 import Logos from "../components/Logos";
+import { signInAnonymously } from "firebase/auth";
+import { auth } from "../firebase_config";
+import { useUser } from "../provider/userData";
 
 export default function GuestPage() {
   const navigate = useNavigate();
@@ -11,20 +14,40 @@ export default function GuestPage() {
   const [buttonState, setButtonState] = useState<"idle" | "loading" | "done">(
     "idle"
   );
-  const handleSignup = () => {
+    const { updateUserData } = useUser();
+  
+  const handleSignup = async () => {
     if (!nickename) {
       setError("Veuillez remplir tous les champs.");
       return;
     }
+
     if (buttonState !== "idle") return;
+
     setButtonState("loading");
-    setTimeout(() => {
+    setError("");
+
+    try {
+      // Anonymous sign-in
+      const result = await signInAnonymously(auth);
+      const uid = result.user.uid;
+      console.log("Anonymous user signed in with UID:", uid);
+
+      updateUserData({
+        uid,
+        nickname: nickename,
+        progress: {},
+      });
+
+      // Proceed to next step
       setButtonState("done");
       console.log("Logged in with", nickename);
       navigate("/choice");
-    }, 200);
-    setError("");
-    // Fake login logic
+    } catch (error) {
+      console.error("Signup failed:", error);
+      setError("Erreur lors de la connexion. Veuillez réessayer.");
+      setButtonState("idle");
+    }
   };
 
   const loaderStyle: CSSProperties = {
@@ -111,6 +134,7 @@ export default function GuestPage() {
           placeholder="Surnom"
           value={nickename}
           onChange={(e) => setNickname(e.target.value)}
+          maxLength={10}
           style={{
             padding: "0.75rem",
             marginBottom: "1rem",

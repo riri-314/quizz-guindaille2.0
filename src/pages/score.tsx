@@ -132,8 +132,8 @@ export default function Score() {
         >
           Suivant
         </button>
-        <Logos />
       </div>
+      <Logos />
     </>
   );
 }

@@ -329,7 +329,7 @@ export default function Classement() {
               onChange={(e) => setPublishScore(e.target.checked)}
               style={{ marginRight: "0.5rem" }}
             />
-            publier mon résultat en public
+            Afficher mon résultat au public
           </label>
         </div>
         {/* Fixed logos that never move */}

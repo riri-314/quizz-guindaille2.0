@@ -14,8 +14,8 @@ export default function GuestPage() {
   const [buttonState, setButtonState] = useState<"idle" | "loading" | "done">(
     "idle"
   );
-    const { updateUserData } = useUser();
-  
+  const { updateUserData } = useUser();
+
   const handleSignup = async () => {
     if (!nickename) {
       setError("Veuillez remplir tous les champs.");
@@ -115,11 +115,22 @@ export default function GuestPage() {
 
           fontSize: "2.5rem",
           fontWeight: "bold",
-          marginBottom: "2rem",
+          marginBottom: "1rem",
           textShadow: "2px 2px 4px black",
         }}
       >
         Choisis un surnom
+      </h1>
+      <h1
+        style={{
+          fontFamily: "funny",
+          fontSize: "1rem",
+          marginBottom: "2rem",
+          lineHeight: 1.5,
+        }}
+      >
+        Tu joues seul ou en groupe ? Mets ton prénom, un surnom ou même le nom
+        de ton kot !
       </h1>
       <div
         style={{

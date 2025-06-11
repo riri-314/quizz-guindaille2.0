@@ -81,7 +81,7 @@ export default function Choice() {
     >
       <Arrow path="/guest" />
 
-      <div style={textTitleStyle}>Fait un choix !</div>
+      <div style={textTitleStyle}>Fais un choix !</div>
 
       <button
         onClick={QCM}

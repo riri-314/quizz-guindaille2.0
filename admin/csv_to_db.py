@@ -84,6 +84,13 @@ def pictos():
     }
     return ret
 
+def classement(i):
+        # player username and player score, make a list that will be sorted by score
+    tmp = {}
+    for x in range(1, i):
+        tmp["player"+str(x)] = 60 + x * 2
+        
+    return tmp
 
 def extract_response_info(text):
     match = re.search(r'\b([A-C])[^a-zA-Z0-9]*\s+(.*)', text)
@@ -174,4 +181,4 @@ print("All quizz done")
 print(final_data)
 
 doc_ref = db.collection("public").document("quizzdata")
-doc_ref.set({"quizzdata":final_data, "pictos": pictos()})
+doc_ref.set({"quizzdata":final_data, "pictos": pictos(), "classement": classement(3)})

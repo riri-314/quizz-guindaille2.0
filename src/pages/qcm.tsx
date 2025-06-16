@@ -22,7 +22,6 @@ export default function DesoulerQuestion() {
       setQuestions(ans[question].answers);
       setTitle(quiz.questions[question].text);
       setHelpText(quiz.questions[question].help || ""); // Set help text if available
-      console.log("helpText:", quiz.questions[question].help);
     } catch (error) {
       console.error("Error in DesoulerQuestion component:", error);
       navigate("/error");
@@ -53,6 +52,8 @@ export default function DesoulerQuestion() {
     } else {
       setQuestions(quiz.questions[question + 1].answers);
       setTitle(quiz.questions[question + 1].text);
+      setHelpText(quiz.questions[question + 1].help || ""); // Set help text if available
+
     }
   };
 

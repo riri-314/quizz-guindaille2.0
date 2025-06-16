@@ -13,6 +13,7 @@ export default function DesoulerQuestion() {
   const [title, setTitle] = useState<string>("");
   const [questions, setQuestions] = useState<any[]>([]);
   const [nbQUestions, setNbQuestions] = useState<number>(0);
+  const [helpText, setHelpText] = useState<string>("");
 
   useEffect(() => {
     try {
@@ -20,13 +21,13 @@ export default function DesoulerQuestion() {
       setNbQuestions(ans.length);
       setQuestions(ans[question].answers);
       setTitle(quiz.questions[question].text);
+      setHelpText(quiz.questions[question].help || ""); // Set help text if available
+      console.log("helpText:", quiz.questions[question].help);
     } catch (error) {
       console.error("Error in DesoulerQuestion component:", error);
       navigate("/error");
     }
   }, []);
-
-
 
   const handleClick = (correct: boolean) => {
     if (answered) return; // Prevent multiple clicks after answering
@@ -68,96 +69,116 @@ export default function DesoulerQuestion() {
     animation: "fadeInUp 0.8s ease-out forwards",
   };
 
-  return (
-    <div>
-      {answered && (
-        <div style={textTitleStyle}>{!correct ? "Faux ❌" : "Juste ✅"}</div>
-      )}
+    const textExplainStyle: CSSProperties = {
+    fontFamily: "funny",
+    marginBottom: "0rem",
+    color: "white",
+    fontWeight: "bold",
+    fontSize: "0.8rem",
+    paddingLeft: "1rem",
+    paddingRight: "1rem",
+    lineHeight: 1.5,
+    textAlign: "center",
+    animation: "fadeInUp 0.8s ease-out forwards",
+  };
 
-      <div
-        style={{
-          backgroundColor: "white",
-          borderRadius: "1.5rem",
-          maxWidth: "330px",
-          width: "100%",
-          overflow: "hidden",
-          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
-          margin: "0 auto",
-        }}
-      >
+  //    <div style={answered ? { height: "93vh" } : {}}>
+  return (
+    <>
+      <div style={{paddingBottom: "5rem", maxWidth: "600px"}}>
+        {answered && (
+          <>
+          <div style={textTitleStyle}>{!correct ? "Faux ❌ " : "Juste ✅"}</div>
+          <div style={textExplainStyle}>{helpText}</div>
+          </>
+        )}
+
+        <br />
         <div
           style={{
-            backgroundColor: "#3498db",
-            color: "white",
-            padding: "1.2rem",
-            lineHeight: 1.5,
-            fontWeight: "bold",
-            fontFamily: "funny",
+            backgroundColor: "white",
+            borderRadius: "1.5rem",
+            maxWidth: "330px",
+            width: "100%",
+            overflow: "hidden",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+            margin: "0 auto",
           }}
         >
-          {title}
+          <div
+            style={{
+              backgroundColor: "#3498db",
+              color: "white",
+              padding: "1.2rem",
+              lineHeight: 1.5,
+              fontWeight: "bold",
+              fontFamily: "funny",
+            }}
+          >
+            {title}
+          </div>
+          <div
+            style={{
+              padding: "1.25rem",
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
+              color: "black",
+            }}
+          >
+            {questions.map((answer: any, idx: any) => {
+              const letter = String.fromCharCode(65 + idx);
+              return (
+                <div
+                  key={letter}
+                  onClick={() => handleClick(answer.correct)}
+                  style={{
+                    border: "2px solid #ec4899",
+                    borderRadius: "999px",
+                    padding: "0.75rem 1rem",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.75rem",
+                    cursor: "pointer",
+                  }}
+                >
+                  <>
+                    <span
+                      style={{
+                        border: answered ? "none" : "2px solid #3b82f6",
+                        borderRadius: "999px",
+                        padding: "0.25rem 0.75rem",
+                        fontWeight: "bold",
+                        color: "#3b82f6",
+                      }}
+                    >
+                      {!answered ? letter : answer.correct ? "✔️" : "❌"}
+                    </span>
+                    <span>{answer.text}</span>
+                  </>
+                </div>
+              );
+            })}
+          </div>
         </div>
-        <div
-          style={{
-            padding: "1.25rem",
-            display: "flex",
-            flexDirection: "column",
-            gap: "1rem",
-            color: "black",
-          }}
-        >
-          {questions.map((answer: any, idx: any) => {
-            const letter = String.fromCharCode(65 + idx);
-            return (
-              <div
-                key={letter}
-                onClick={() => handleClick(answer.correct)}
-                style={{
-                  border: "2px solid #ec4899",
-                  borderRadius: "999px",
-                  padding: "0.75rem 1rem",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.75rem",
-                  cursor: "pointer",
-                }}
-              >
-                <>
-                  <span
-                    style={{
-                      border: answered ? "none" : "2px solid #3b82f6",
-                      borderRadius: "999px",
-                      padding: "0.25rem 0.75rem",
-                      fontWeight: "bold",
-                      color: "#3b82f6",
-                    }}
-                  >
-                    {!answered ? letter : answer.correct ? "✔️" : "❌"}
-                  </span>
-                  <span>{answer.text}</span>
-                </>
-              </div>
-            );
-          })}
-        </div>
+        {answered && (
+          <div
+            style={{
+              fontFamily: "funny",
+              marginTop: "1rem",
+              fontSize: "1rem",
+              fontWeight: "bold",
+              color: "#fff",
+              animation: "fadeInUp 0.8s ease-out forwards",
+              cursor: "pointer",
+            }}
+            onClick={() => nextQuestion()}
+          >
+            Suivant →
+          </div>
+        )}
       </div>
-      {answered && (
-        <div
-          style={{
-            fontFamily: "funny",
-            marginTop: "1rem",
-            fontSize: "1rem",
-            fontWeight: "bold",
-            color: "#fff",
-            animation: "fadeInUp 0.8s ease-out forwards",
-            cursor: "pointer",
-          }}
-          onClick={() => nextQuestion()}
-        >
-          Suivant →
-        </div>
-      )}
       <Logos />
-    </div>
+    </>
   );
 }

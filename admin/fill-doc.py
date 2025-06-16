@@ -103,6 +103,7 @@ def quiz_1(i):
         "questions": [
             {
                 "text": "Quizz"+str(i+1)+" q.1 faire pour cuver son alcool ?",
+                "help": "Il n'y a pas de remède miracle pour éliminer l'alcool du corps. Le temps est le seul moyen efficace.",
                 "answers": [
                     { "text": "Boire un café bien serré.", "correct": False },
                     { "text": "Prendre "+str(i)+" une douche froide.", "correct": False },
@@ -111,6 +112,7 @@ def quiz_1(i):
             },
             {
                 "text": "Quizz"+str(i+1)+" q.2 faire pour cuver son alcool ?",
+                "help": "Il n'y a pas de remède miracle pour éliminer l'alcool du corps. Le temps est le seul moyen efficace.",
                 "answers": [
                     { "text": "Boire un thé bien serré.", "correct": False },
                     { "text": "Prendre "+str(i)+" une douche froide.", "correct": False },
@@ -119,6 +121,7 @@ def quiz_1(i):
             },
             {
                 "text": "Quizz"+str(i+1)+" q.3 faire pour cuver son alcool ?",
+                "help": "Il n'y a pas de remède miracle pour éliminer l'alcool du corps. Le temps est le seul moyen efficace.",
                 "answers": [
                     { "text": "Boire une soupe bien serré.", "correct": False },
                     { "text": "Prendre "+str(i)+" une douche froide.", "correct": False },

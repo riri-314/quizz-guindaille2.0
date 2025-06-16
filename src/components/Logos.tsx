@@ -3,7 +3,6 @@ import guindaille from "/guindaille.png";
 import type { CSSProperties } from "react";
 
 export default function logos() {
-  console.log("Logos component rendered");
   const logoLeftStyle: CSSProperties = {
     zIndex: 10,
     position: "absolute",
